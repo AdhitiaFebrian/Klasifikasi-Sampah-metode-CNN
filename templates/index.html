@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediksi Sampah Organik/Non-Organik</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Pilih Gambar untuk Klasifikasi Sampah</h1>
+    
+    <form action="/predict" method="POST">
+        <label for="selected_image">Pilih Gambar:</label>
+        <select name="selected_image" required>
+            <optgroup label="">
+                {% for img in organic_images %}
+                    <option value="{{ img }}">{{ img }}</option>
+                {% endfor %}
+            </optgroup>
+            <optgroup label="">
+                {% for img in non_organic_images %}
+                    <option value="{{ img }}">{{ img }}</option>
+                {% endfor %}
+            </optgroup>
+        </select>
+        <button type="submit">Klasifikasikan</button>
+    </form>
+
+    {% if predicted_class %}
+        <h2>Hasil Prediksi: {{ predicted_class }}</h2>
+        <img src="{{ img_path }}" alt="Gambar yang Dipilih" style="width:300px;">
+    {% endif %}
+</body>
+</html>
